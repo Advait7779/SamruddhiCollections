@@ -1,8 +1,7 @@
 import { Link } from 'react-router-dom'
-import { MapPin, Phone, Clock, WhatsappLogo, ArrowUp, Star } from '@phosphor-icons/react'
+import { MapPin, Phone, Clock, WhatsappLogo, Star } from '@phosphor-icons/react'
 
 export default function Footer() {
-  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
 
   return (
     <footer className="bg-[#1C1917] text-stone-300">
@@ -24,8 +23,8 @@ export default function Footer() {
               <span className="flex text-amber-400">
                 <Star size={16} weight="fill" />
               </span>
-              <span className="font-semibold text-white">4.9</span>
-              <span className="text-xs text-stone-400">(30 Google Reviews)</span>
+              <span className="font-semibold text-white">4.9 ★</span>
+              <span className="text-xs text-stone-400">(Google Rating)</span>
             </div>
           </div>
 
@@ -40,6 +39,8 @@ export default function Footer() {
                 { name: 'Collections', path: '/collections' },
                 { name: 'About Us', path: '/about' },
                 { name: 'Contact Us', path: '/contact' },
+                { name: 'Terms & Conditions', path: '/terms' },
+                { name: 'Privacy Policy', path: '/privacy' }
               ].map((link) => (
                 <li key={link.path}>
                   <Link
@@ -83,7 +84,7 @@ export default function Footer() {
               <li className="flex items-center gap-2.5">
                 <Phone size={18} weight="bold" className="text-[#EA580C] shrink-0" />
                 <a href="tel:+919881225553" className="hover:text-white transition-colors">
-                  098812 25553
+                  +91 98812 25553
                 </a>
               </li>
               <li className="flex items-center gap-2.5">
@@ -95,18 +96,27 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Bottom Bar */}
+      {/* Bottom Bar with RCS & Legal Links */}
       <div className="border-t border-stone-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-stone-500">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-stone-500">
           <p>© {new Date().getFullYear()} Samruddhi Collection. All rights reserved.</p>
-          <button
-            onClick={scrollToTop}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-stone-800 hover:bg-stone-700 text-stone-300 rounded transition-colors"
-            aria-label="Scroll to top"
-          >
-            <span>Back to Top</span>
-            <ArrowUp size={14} weight="bold" />
-          </button>
+
+          {/* Legal Compliance Links */}
+          <div className="flex items-center gap-4 sm:gap-6 flex-wrap justify-center text-xs">
+            <Link
+              to="/terms"
+              className="text-stone-400 hover:text-white transition-colors underline-offset-4 hover:underline"
+            >
+              Terms &amp; Conditions
+            </Link>
+            <span className="text-stone-700">•</span>
+            <Link
+              to="/privacy"
+              className="text-stone-400 hover:text-white transition-colors underline-offset-4 hover:underline"
+            >
+              Privacy Policy
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

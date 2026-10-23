@@ -1,48 +1,51 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import {
-  Phone,
   WhatsappLogo,
-  MapPin,
-  Clock,
-  CaretDown,
   PaperPlaneTilt,
   CheckCircle,
-  NavigationArrow
+  NavigationArrow,
+  CaretDown,
+  Check
 } from '@phosphor-icons/react'
 import SareeBorder from '../components/SareeBorder'
+import ScrollReveal from '../components/ScrollReveal'
 
-const FAQS = [
-  {
-    question: 'What types of sarees are available in your shop?',
-    answer: 'We stock Yeola Paithani sarees, Kanjivaram silk, pure cotton sarees, Nauvari (9-yard) sarees, designer georgette, and bridal wedding collections.'
-  },
-  {
-    question: 'Do you offer wholesale rates for wedding purchases?',
-    answer: 'Yes! We provide special wholesale rates for bulk wedding purchases, family functions, and return gifts. Contact us on WhatsApp or visit our shop.'
-  },
-  {
-    question: 'What are your shop timings and open days?',
-    answer: 'We are open all 7 days of the week from 9:00 AM to 8:00 PM.'
-  },
-  {
-    question: 'Can I order or enquire through WhatsApp?',
-    answer: 'Yes, you can message us directly on 098812 25553 with photos or queries, and we will share current stock details and photos.'
-  },
-  {
-    question: 'Where is your shop located in Ashwi Bk?',
-    answer: 'We are located at Pratappur Road, Swaroopchand Gandhi Market, Ashwi Bk, Tal Sangamner, Maharashtra 413714.'
-  }
+const INTEREST_OPTIONS = [
+  'Paithani & Silk Sarees',
+  'Unstitched Dress Material',
+  'Readymade Kurtis & Suits',
+  'Kids Ethnic Wear',
+  'Wedding Bulk / Wholesale Orders',
+  'Cutlery & Bangles'
 ]
 
 export default function Contact() {
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
-    interest: 'Sarees',
+    interest: 'Paithani & Silk Sarees',
     message: ''
   })
   const [submitted, setSubmitted] = useState(false)
-  const [openFaq, setOpenFaq] = useState(0)
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const dropdownRef = useRef(null)
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setIsDropdownOpen(false)
+      }
+    }
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') setIsDropdownOpen(false)
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    document.addEventListener('keydown', handleKeyDown)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [])
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -54,9 +57,6 @@ export default function Contact() {
     <div className="font-sans text-stone-800">
       <SareeBorder />
 
-      {/* =========================================================================
-          PAGE HEADER - Solid Saffron Orange (#9A3412)
-         ========================================================================= */}
       {/* =========================================================================
           PAGE HEADER - Solid Saffron Orange (#9A3412)
          ========================================================================= */}
@@ -74,66 +74,24 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* =========================================================================
-          SECTION 1: 3 INFO CARDS - Solid Warm Light Yellow (#FFFBEB)
-         ========================================================================= */}
-      <section className="bg-[#FFFBEB] py-10 sm:py-12 px-4 sm:px-6 lg:px-8 border-b border-amber-200">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
-          {/* Card 1: Phone */}
-          <div className="bg-white border border-amber-200 p-5 sm:p-6 rounded-lg text-center flex flex-col items-center shadow-xs">
-            <div className="w-12 h-12 bg-[#FFF7ED] text-[#EA580C] rounded-full flex items-center justify-center mb-3">
-              <Phone size={24} weight="bold" />
-            </div>
-            <h3 className="text-sm sm:text-base font-bold text-stone-900">Call Us Directly</h3>
-            <p className="text-xs text-stone-500 mt-1">Direct shop desk</p>
-            <a
-              href="tel:+919881225553"
-              className="mt-2.5 text-base sm:text-lg font-bold text-[#EA580C] hover:underline"
-            >
-              098812 25553
-            </a>
-          </div>
-
-          {/* Card 2: Address */}
-          <div className="bg-white border border-amber-200 p-5 sm:p-6 rounded-lg text-center flex flex-col items-center shadow-xs">
-            <div className="w-12 h-12 bg-[#FFF7ED] text-[#EA580C] rounded-full flex items-center justify-center mb-3">
-              <MapPin size={24} weight="bold" />
-            </div>
-            <h3 className="text-sm sm:text-base font-bold text-stone-900">Store Address</h3>
-            <p className="text-xs text-stone-600 mt-2 leading-relaxed max-w-xs">
-              Pratappur Road, Swaroopchand Gandhi Market, Ashwi Bk, Tal Sangamner, Maharashtra 413714
-            </p>
-          </div>
-
-          {/* Card 3: Hours */}
-          <div className="bg-white border border-amber-200 p-5 sm:p-6 rounded-lg text-center flex flex-col items-center shadow-xs">
-            <div className="w-12 h-12 bg-[#FFF7ED] text-[#EA580C] rounded-full flex items-center justify-center mb-3">
-              <Clock size={24} weight="bold" />
-            </div>
-            <h3 className="text-sm sm:text-base font-bold text-stone-900">Shop Hours</h3>
-            <p className="text-xs text-stone-500 mt-1">Open 7 days a week</p>
-            <p className="mt-2 text-xs sm:text-sm font-bold text-stone-800">
-              9:00 AM – 8:00 PM Daily
-            </p>
-          </div>
-        </div>
-      </section>
+      {/* Bottom Saree Border Strip */}
+      <SareeBorder />
 
       {/* =========================================================================
-          SECTION 2: CONTACT FORM & MAP - Solid White Background
+          CONTACT FORM & MAP - Solid White Background
          ========================================================================= */}
       <section className="bg-white py-12 sm:py-16 px-4 sm:px-6 lg:px-8 border-b border-stone-200">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           {/* Form Column */}
-          <div className="lg:col-span-6">
-            <div className="border border-stone-200 p-5 sm:p-8 rounded-lg bg-white shadow-xs">
+          <ScrollReveal variant="fade-right" duration={650} className="lg:col-span-5">
+            <div className="border border-stone-200 p-6 sm:p-9 sm:py-10 rounded-lg bg-white shadow-xs max-w-lg mx-auto lg:max-w-none">
               <span className="text-xs font-bold uppercase tracking-widest text-[#EA580C]">
                 मेसेज पाठवा • Send an Enquiry
               </span>
               <h2 className="text-xl sm:text-2xl font-bold text-stone-900 mt-1">
                 Enquire About Clothing &amp; Sarees
               </h2>
-              <p className="text-xs sm:text-sm text-stone-600 mt-2 mb-5 sm:mb-6 leading-relaxed">
+              <p className="text-xs sm:text-sm text-stone-600 mt-2 mb-6 sm:mb-7 leading-relaxed">
                 Fill this simple form or message us directly on WhatsApp for immediate assistance.
               </p>
 
@@ -147,7 +105,7 @@ export default function Contact() {
                   <button
                     onClick={() => {
                       setSubmitted(false)
-                      setFormData({ name: '', phone: '', interest: 'Sarees', message: '' })
+                      setFormData({ name: '', phone: '', interest: 'Paithani & Silk Sarees', message: '' })
                     }}
                     className="mt-2 text-xs font-bold underline cursor-pointer text-[#16A34A]"
                   >
@@ -155,9 +113,9 @@ export default function Contact() {
                   </button>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-4 text-sm">
+                <form onSubmit={handleSubmit} className="space-y-5 text-sm">
                   <div>
-                    <label className="block text-xs font-bold uppercase text-stone-700 mb-1">
+                    <label className="block text-xs font-bold uppercase text-stone-700 mb-1.5">
                       Your Full Name *
                     </label>
                     <input
@@ -166,12 +124,12 @@ export default function Contact() {
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       placeholder="e.g. Ramesh Kadam"
-                      className="w-full px-3.5 py-2.5 border border-stone-300 rounded-md text-stone-900 focus:outline-none focus:border-[#EA580C] text-sm"
+                      className="w-full px-4 py-3 border border-stone-300 rounded-md text-stone-900 focus:outline-none focus:border-[#EA580C] text-sm"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold uppercase text-stone-700 mb-1">
+                    <label className="block text-xs font-bold uppercase text-stone-700 mb-1.5">
                       WhatsApp / Mobile Number *
                     </label>
                     <input
@@ -179,46 +137,88 @@ export default function Contact() {
                       required
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      placeholder="e.g. 98812 25553"
-                      className="w-full px-3.5 py-2.5 border border-stone-300 rounded-md text-stone-900 focus:outline-none focus:border-[#EA580C] text-sm"
+                      placeholder="e.g. +91 98812 25553"
+                      className="w-full px-4 py-3 border border-stone-300 rounded-md text-stone-900 focus:outline-none focus:border-[#EA580C] text-sm"
                     />
                   </div>
 
-                  <div>
-                    <label className="block text-xs font-bold uppercase text-stone-700 mb-1">
+                  <div className="relative" ref={dropdownRef}>
+                    <label className="block text-xs font-bold uppercase text-stone-700 mb-1.5">
                       Product Interest
                     </label>
-                    <select
-                      value={formData.interest}
-                      onChange={(e) => setFormData({ ...formData, interest: e.target.value })}
-                      className="w-full px-3.5 py-2.5 border border-stone-300 rounded-md text-stone-900 focus:outline-none focus:border-[#EA580C] bg-white text-sm"
+                    <button
+                      type="button"
+                      onClick={() => setIsDropdownOpen((prev) => !prev)}
+                      aria-haspopup="listbox"
+                      aria-expanded={isDropdownOpen}
+                      className={`w-full px-4 py-3 bg-white border rounded-md text-stone-900 text-sm flex items-center justify-between text-left transition-all cursor-pointer ${
+                        isDropdownOpen
+                          ? 'border-[#EA580C] ring-2 ring-[#EA580C]/20 shadow-xs'
+                          : 'border-stone-300 hover:border-stone-400'
+                      }`}
                     >
-                      <option value="Paithani & Silk Sarees">Paithani &amp; Silk Sarees</option>
-                      <option value="Dress Material">Unstitched Dress Material</option>
-                      <option value="Readymade Garments">Readymade Kurtis &amp; Suits</option>
-                      <option value="Kids Wear">Kids Ethnic Wear</option>
-                      <option value="Wedding Bulk Orders">Wedding Bulk / Wholesale Orders</option>
-                      <option value="Cutlery & Bangles">Cutlery &amp; Bangles</option>
-                    </select>
+                      <span className="truncate font-medium">{formData.interest}</span>
+                      <CaretDown
+                        size={16}
+                        weight="bold"
+                        className={`shrink-0 transition-transform duration-200 ${
+                          isDropdownOpen ? 'rotate-180 text-[#EA580C]' : 'text-stone-400'
+                        }`}
+                      />
+                    </button>
+
+                    {/* Custom Dropdown Menu matching site theme */}
+                    {isDropdownOpen && (
+                      <div
+                        role="listbox"
+                        className="absolute z-30 left-0 right-0 mt-1.5 bg-white border border-amber-200 rounded-lg shadow-xl overflow-hidden py-1.5 max-h-64 overflow-y-auto"
+                      >
+                        {INTEREST_OPTIONS.map((opt) => {
+                          const isSelected = formData.interest === opt
+                          return (
+                            <button
+                              key={opt}
+                              type="button"
+                              role="option"
+                              aria-selected={isSelected}
+                              onClick={() => {
+                                setFormData({ ...formData, interest: opt })
+                                setIsDropdownOpen(false)
+                              }}
+                              className={`w-full text-left px-4 py-2.5 text-xs sm:text-sm flex items-center justify-between transition-colors cursor-pointer ${
+                                isSelected
+                                  ? 'bg-[#FFF7ED] text-[#EA580C] font-semibold'
+                                  : 'text-stone-700 hover:bg-[#FFFBEB] hover:text-[#EA580C]'
+                              }`}
+                            >
+                              <span>{opt}</span>
+                              {isSelected && (
+                                <Check size={16} weight="bold" className="text-[#EA580C] shrink-0" />
+                              )}
+                            </button>
+                          )
+                        })}
+                      </div>
+                    )}
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold uppercase text-stone-700 mb-1">
+                    <label className="block text-xs font-bold uppercase text-stone-700 mb-1.5">
                       Your Message / Enquiry
                     </label>
                     <textarea
-                      rows={3}
+                      rows={5}
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                       placeholder="Let us know what color, design, or occasion you are shopping for..."
-                      className="w-full px-3.5 py-2.5 border border-stone-300 rounded-md text-stone-900 focus:outline-none focus:border-[#EA580C] text-sm"
+                      className="w-full px-4 py-3 border border-stone-300 rounded-md text-stone-900 focus:outline-none focus:border-[#EA580C] text-sm resize-none"
                     />
                   </div>
 
-                  <div className="pt-2 flex flex-row items-center gap-2 sm:gap-3">
+                  <div className="pt-3 flex flex-row items-center gap-2 sm:gap-3">
                     <button
                       type="submit"
-                      className="flex-1 py-2.5 sm:py-3 px-2 xs:px-4 bg-[#EA580C] hover:bg-[#C2410C] text-white font-bold rounded-md text-xs sm:text-sm transition-colors flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer shadow-xs"
+                      className="flex-1 py-3 sm:py-3.5 px-2 xs:px-4 bg-[#EA580C] hover:bg-[#C2410C] text-white font-bold rounded-md text-xs sm:text-sm transition-colors flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer shadow-xs"
                     >
                       <PaperPlaneTilt size={18} weight="bold" className="shrink-0" />
                       <span className="truncate">Submit Enquiry</span>
@@ -231,7 +231,7 @@ export default function Contact() {
                       )}.`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 py-2.5 sm:py-3 px-2 xs:px-4 bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold rounded-md text-xs sm:text-sm transition-colors flex items-center justify-center gap-1.5 sm:gap-2 text-center shadow-xs"
+                      className="flex-1 py-3 sm:py-3.5 px-2 xs:px-4 bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold rounded-md text-xs sm:text-sm transition-colors flex items-center justify-center gap-1.5 sm:gap-2 text-center shadow-xs"
                     >
                       <WhatsappLogo size={18} weight="fill" className="shrink-0" />
                       <span className="truncate">Chat on WhatsApp</span>
@@ -240,10 +240,10 @@ export default function Contact() {
                 </form>
               )}
             </div>
-          </div>
+          </ScrollReveal>
 
           {/* Map Column */}
-          <div className="lg:col-span-6 flex flex-col justify-between">
+          <ScrollReveal variant="fade-left" duration={650} delay={80} className="lg:col-span-7 flex flex-col justify-between">
             <div className="space-y-3 sm:space-y-4">
               <span className="text-xs font-bold uppercase tracking-widest text-[#EA580C]">
                 नकाशा • Shop Location Map
@@ -255,7 +255,7 @@ export default function Contact() {
                 Located near Shri Ganesh Clinical Laboratory, Swaroopchand Gandhi Market in Ashwi Bk, Sangamner.
               </p>
 
-              <div className="border border-stone-200 rounded-lg overflow-hidden h-64 sm:h-80 shadow-xs">
+              <div className="border border-stone-200 rounded-lg overflow-hidden h-72 sm:h-96 lg:h-[440px] shadow-xs">
                 <iframe
                   title="Samruddhi Collection Location"
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15024.468202580795!2d74.3430589!3d19.4939109!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bdcddc3d4a6e8b7%3A0x6b4f74d06a0ee331!2sAshwi%20BK%2C%20Maharashtra%20413714!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
@@ -273,62 +273,14 @@ export default function Contact() {
                   href="https://maps.google.com/?q=Samruddhi+collection+Ashwi+Bk+Tal+Sangamner"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 px-5 py-3 bg-stone-900 hover:bg-stone-800 text-white font-semibold rounded-md text-xs sm:text-sm transition-colors w-full sm:w-auto"
+                  className="inline-flex items-center justify-center gap-2 px-5 py-3 bg-stone-900 hover:bg-stone-800 text-white font-semibold rounded-md text-xs sm:text-sm transition-all hover:scale-102 active:scale-95 w-full sm:w-auto shadow-xs"
                 >
                   <NavigationArrow size={16} weight="bold" />
                   <span>Open in Google Maps App</span>
                 </a>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* =========================================================================
-          SECTION 3: FAQ ACCORDION - Solid Light Yellow (#FEF9C3)
-         ========================================================================= */}
-      <section className="bg-[#FEF9C3] py-12 sm:py-16 px-4 sm:px-6 lg:px-8 border-b border-amber-300">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-8 sm:mb-10">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#7C2D12] bg-[#FDE047] px-3 py-1 rounded">
-              वारंवार विचारले जाणारे प्रश्न • FAQs
-            </span>
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-stone-900 mt-2">
-              Frequently Asked Questions
-            </h2>
-            <div className="w-16 h-1 bg-[#EA580C] mx-auto mt-3" />
-          </div>
-
-          <div className="space-y-3">
-            {FAQS.map((faq, idx) => {
-              const isOpen = openFaq === idx
-              return (
-                <div
-                  key={faq.question}
-                  className="bg-white border border-amber-200 rounded-lg overflow-hidden shadow-xs"
-                >
-                  <button
-                    onClick={() => setOpenFaq(isOpen ? -1 : idx)}
-                    className="w-full text-left p-3.5 sm:p-5 flex items-center justify-between gap-4 font-bold text-sm sm:text-base text-stone-900 cursor-pointer"
-                  >
-                    <span>{faq.question}</span>
-                    <CaretDown
-                      size={18}
-                      weight="bold"
-                      className={`text-[#EA580C] transition-transform ${
-                        isOpen ? 'rotate-180' : ''
-                      }`}
-                    />
-                  </button>
-                  {isOpen && (
-                    <div className="px-4 sm:px-5 pb-4 sm:pb-5 text-xs sm:text-sm text-stone-600 border-t border-stone-100 pt-3 leading-relaxed">
-                      {faq.answer}
-                    </div>
-                  )}
-                </div>
-              )
-            })}
-          </div>
+          </ScrollReveal>
         </div>
       </section>
     </div>

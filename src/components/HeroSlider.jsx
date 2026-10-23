@@ -11,42 +11,54 @@ import {
 const SLIDES = [
   {
     id: 1,
-    tag: 'SAREE SHOP • ASHWI BK, SANGAMNER',
-    titleMarathi: 'पैठणी, सिल्क & साडी दालन',
+    tag: 'ROYAL YEOLA PAITHANI & WEDDING SILK',
+    titleMarathi: 'राजेशाही येवला पैठणी व अस्सल सिल्क साड्या',
     description:
-      'Yeola Paithani weaves, pure silk, and everyday wholesale ethnic wear, chosen with family trust for generations in Ashwi Bk, Sangamner.',
+      'Handwoven peacock zari pallu, rich golden borders, and pure bridal silk. Special wholesale rates for wedding shopping with complimentary Saree Fall & Pico services.',
     image: '/images/slider-bridal-paithani.jpg',
-    imageAlt: 'Paithani and Silk Sarees',
-    primaryText: 'Order on WhatsApp',
+    imageAlt: 'Authentic Yeola Paithani and Silk Sarees',
+    badgeValue: '100%',
+    badgeLabel: 'Pure Silk Weaves',
+    badgeSub: 'Yeola Paithani & Zari',
+    primaryText: 'Enquire on WhatsApp',
     primaryLink: 'https://wa.me/919881225553?text=Hello%20Samruddhi%20Collection,%20I%20want%20to%20enquire%20about%20Paithani%20and%20Silk%20Sarees.',
-    secondaryText: 'View Sarees',
-    secondaryLink: '/collections?cat=Sarees'
+    secondaryText: 'Explore Silk Sarees',
+    secondaryLink: '/collections',
+    microInfo: ['Wedding Bulk Discounts', 'Free Saree Fall & Pico', 'Pratappur Road, Ashwi Bk']
   },
   {
     id: 2,
-    tag: 'DRESS MATERIAL & READYMADE GARMENTS',
-    titleMarathi: 'ड्रेस मटेरियल व रेडीमेड कुर्ती',
+    tag: 'TRENDING DRESS MATERIAL & READYMADE SUITS',
+    titleMarathi: 'डिझायनर ड्रेस मटेरियल व रेडीमेड कुर्ती सेट्स',
     description:
-      'Unstitched Chanderi and pure cotton suit pieces with embroidered dupattas, plus ready-to-wear festive and daily wear kurtis.',
+      'Pure cotton, Chanderi, and party-wear suit pieces with matching dupattas, plus ready-to-wear flared kurtis and festive suits tailored for every occasion.',
     image: '/images/slider-dress-material.jpg',
-    imageAlt: 'Dress Material and Kurti Collection',
+    imageAlt: 'Designer Dress Material and Kurti Collection',
+    badgeValue: 'Direct',
+    badgeLabel: 'Wholesale Rates',
+    badgeSub: 'Suits & Kurtis',
     primaryText: 'Order on WhatsApp',
     primaryLink: 'https://wa.me/919881225553?text=Hello%20Samruddhi%20Collection,%20I%20want%20to%20enquire%20about%20Dress%20Materials.',
-    secondaryText: 'View Suits',
-    secondaryLink: '/collections?cat=Dress Material'
+    secondaryText: 'View Suit Catalog',
+    secondaryLink: '/collections',
+    microInfo: ['Fresh Daily Arrivals', 'Direct Wholesale Rates', 'Sizing from M to 3XL']
   },
   {
     id: 3,
-    tag: 'KIDS ETHNIC & FAMILY CLOTHING',
-    titleMarathi: 'मुलांचे कपडे व फॅमिली वेअर',
+    tag: 'BOYS ETHNIC KURTAS & KIDS FESTIVE WEAR',
+    titleMarathi: 'मुलांचे स्टायलिश कुर्ते व सणासुदीचे देखणे कपडे',
     description:
-      'Traditional boys dhoti-kurtas, girls festive lehengas, everyday family ethnic wear, and matching bridal bangles.',
-    image: '/images/slider-family-kids.jpg',
-    imageAlt: 'Kids Wear and Family Garments',
+      'Comfortable cotton-silk dhoti kurtas, festive Nehru jackets, and bright traditional wear crafted gently for delicate skin across all children age groups.',
+    image: '/images/kids-ethnic.jpg',
+    imageAlt: 'Kids Ethnic Wear Collection',
+    badgeValue: 'Festive',
+    badgeLabel: 'Kids Ethnic Special',
+    badgeSub: 'Dhoti Kurta & Sets',
     primaryText: 'Order on WhatsApp',
     primaryLink: 'https://wa.me/919881225553?text=Hello%20Samruddhi%20Collection,%20I%20want%20to%20enquire%20about%20Kids%20Wear.',
-    secondaryText: 'View Kids Wear',
-    secondaryLink: '/collections?cat=Kids Wear'
+    secondaryText: 'Explore Kids Wear',
+    secondaryLink: '/collections',
+    microInfo: ['Ages 1 to 15 Years', 'Soft Breathable Fabrics', 'Open Daily till 8:00 PM']
   }
 ]
 
@@ -58,9 +70,9 @@ export default function HeroSlider() {
     if (isPaused) return
     const timer = setInterval(() => {
       setCurrent((prev) => (prev + 1) % SLIDES.length)
-    }, 5000)
+    }, 6000)
     return () => clearInterval(timer)
-  }, [isPaused])
+  }, [isPaused, current])
 
   const nextSlide = () => setCurrent((prev) => (prev + 1) % SLIDES.length)
   const prevSlide = () => setCurrent((prev) => (prev - 1 + SLIDES.length) % SLIDES.length)
@@ -87,8 +99,8 @@ export default function HeroSlider() {
                 {/* Rating badge */}
                 <div className="inline-flex items-center gap-1.5 bg-[#9A3412] text-amber-200 border border-amber-400/30 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-medium">
                   <Star size={14} weight="fill" className="text-amber-400" />
-                  <span className="font-bold text-white">4.9</span>
-                  <span>from 30 Google reviews</span>
+                  <span className="font-bold text-white">4.9 ★</span>
+                  <span>Google Rating</span>
                 </div>
 
                 {/* Overline tag */}
@@ -106,30 +118,31 @@ export default function HeroSlider() {
                   {slide.description}
                 </p>
 
-                {/* Action Buttons: Side-by-side on Mobile */}
-                <div className="flex flex-row items-center gap-2 sm:gap-3 pt-2 w-full sm:w-auto">
+                {/* Action Buttons: Compact & Sleek */}
+                <div className="flex flex-row items-center gap-2 sm:gap-2.5 pt-1.5 w-full sm:w-auto">
                   <a
                     href={slide.primaryLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 sm:gap-2 px-2.5 xs:px-4 sm:px-6 py-2.5 sm:py-3 bg-[#FACC15] hover:bg-[#EAB308] text-stone-900 font-bold rounded-md transition-colors text-xs sm:text-sm text-center shadow-xs"
+                    className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 bg-[#FACC15] hover:bg-[#EAB308] active:scale-95 text-stone-900 font-semibold rounded-md transition-all text-xs text-center shadow-xs"
                   >
-                    <WhatsappLogo size={18} weight="fill" className="text-[#15803D] shrink-0" />
+                    <WhatsappLogo size={16} weight="fill" className="text-[#15803D] shrink-0" />
                     <span className="truncate">{slide.primaryText}</span>
                   </a>
                   <Link
                     to={slide.secondaryLink}
-                    className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 sm:gap-2 px-2.5 xs:px-4 sm:px-6 py-2.5 sm:py-3 bg-transparent border-2 border-white hover:bg-white hover:text-stone-900 text-white font-medium rounded-md transition-colors text-xs sm:text-sm text-center"
+                    className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 bg-transparent border border-white hover:bg-white hover:text-stone-900 active:scale-95 text-white font-medium rounded-md transition-all text-xs text-center"
                   >
                     <span className="truncate">{slide.secondaryText}</span>
-                    <ArrowRight size={14} weight="bold" className="shrink-0" />
+                    <ArrowRight size={13} weight="bold" className="shrink-0" />
                   </Link>
                 </div>
 
                 {/* Micro info line at bottom */}
                 <div className="pt-1 flex flex-wrap items-center gap-2 sm:gap-3 text-xs text-amber-200/90 font-medium">
-                  <span>• Open today • Closes 8:00 PM</span>
-                  <span>• Pratappur Road, Ashwi Bk</span>
+                  {slide.microInfo.map((info, idx) => (
+                    <span key={idx}>• {info}</span>
+                  ))}
                 </div>
               </div>
 
@@ -145,13 +158,13 @@ export default function HeroSlider() {
                     />
                   </div>
 
-                  {/* Google review box overlapping bottom left */}
+                  {/* Slide-specific highlight badge */}
                   <div className="absolute -bottom-3 sm:-bottom-4 left-3 sm:-left-4 bg-[#FFFDF0] text-stone-900 px-3 sm:px-4 py-2 sm:py-2.5 rounded shadow-lg border border-amber-200 flex items-center gap-2.5 sm:gap-3">
-                    <span className="text-lg sm:text-xl font-extrabold text-[#C2410C] leading-none">
-                      30+
+                    <span className="text-base sm:text-xl font-extrabold text-[#C2410C] leading-none whitespace-nowrap">
+                      {slide.badgeValue}
                     </span>
                     <span className="text-[9px] sm:text-[10px] font-bold text-stone-700 uppercase tracking-wider leading-tight">
-                      Happy Customers<br />On Google (4.9★)
+                      {slide.badgeLabel}<br />{slide.badgeSub}
                     </span>
                   </div>
                 </div>
