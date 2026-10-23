@@ -121,9 +121,9 @@ export default function Footer() {
       </div>
 
       {/* Credit Line */}
-      <div className="border-t border-stone-800/60">
+      <div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 text-center">
-          <p className="text-[11px] text-stone-600">
+          <p className="text-xs sm:text-sm text-stone-600">
             Designed and Marketed by{' '}
             <a
               href="https://advaitdigital.com"
