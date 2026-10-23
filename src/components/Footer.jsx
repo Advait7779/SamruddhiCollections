@@ -119,6 +119,23 @@ export default function Footer() {
           </div>
         </div>
       </div>
+
+      {/* Credit Line */}
+      <div className="border-t border-stone-800/60">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 text-center">
+          <p className="text-[11px] text-stone-600">
+            Designed and Marketed by{' '}
+            <a
+              href="https://advaitdigital.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-stone-400 hover:text-[#EA580C] transition-colors font-semibold"
+            >
+              Advait Digital
+            </a>
+          </p>
+        </div>
+      </div>
     </footer>
   )
 }
