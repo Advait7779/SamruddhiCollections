@@ -29,8 +29,8 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 # Copy compiled files from build stage
 COPY --from=build /app/dist /usr/share/nginx/html
 
-# Expose standard web ports (Coolify defaults to 3000 or 80)
-EXPOSE 80 3000 8080
+# Expose web ports (match Coolify Ports Exposes setting)
+EXPOSE 80 3000 4003 8080
 
 # Run Nginx in foreground
 CMD ["nginx", "-g", "daemon off;"]
