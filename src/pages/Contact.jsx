@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import {
   WhatsappLogo,
   PaperPlaneTilt,
@@ -24,7 +25,8 @@ export default function Contact() {
     name: '',
     phone: '',
     interest: 'Paithani & Silk Sarees',
-    message: ''
+    message: '',
+    consent: false
   })
   const [submitted, setSubmitted] = useState(false)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
@@ -213,6 +215,26 @@ export default function Contact() {
                       placeholder="Let us know what color, design, or occasion you are shopping for..."
                       className="w-full px-4 py-3 border border-stone-300 rounded-md text-stone-900 focus:outline-none focus:border-[#EA580C] text-sm resize-none"
                     />
+                  </div>
+
+                  {/* Consent Checkbox */}
+                  <div className="pt-1">
+                    <label className="flex items-start gap-3 cursor-pointer group">
+                      <input
+                        type="checkbox"
+                        required
+                        checked={formData.consent}
+                        onChange={(e) => setFormData({ ...formData, consent: e.target.checked })}
+                        className="mt-1 h-4 w-4 shrink-0 rounded border-stone-300 text-[#EA580C] accent-[#EA580C] cursor-pointer"
+                      />
+                      <span className="text-xs text-stone-600 leading-relaxed">
+                        I hereby authorise to send notifications on SMS/Messages/WhatsApp/Promotional/RCS/Information Messages. By clicking Submit, you agree to our{' '}
+                        <Link to="/terms" className="text-[#EA580C] font-semibold hover:underline">Terms of Services</Link>
+                        {' '}and then you have read our{' '}
+                        <Link to="/privacy" className="text-[#EA580C] font-semibold hover:underline">Privacy Policy</Link>.
+                        <span className="text-red-500 font-bold"> *</span>
+                      </span>
+                    </label>
                   </div>
 
                   <div className="pt-3 flex flex-row items-center gap-2 sm:gap-3">
